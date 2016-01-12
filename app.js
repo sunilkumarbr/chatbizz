@@ -329,7 +329,7 @@ io.on('connection', function(socket) {
             name: nxtUserName
         }).toArray(function(e, r) {
             if (e) throw e;
-            else {
+            else if(r[0]!==undefined){
                 socket.broadcast.emit('isOnline', {
                     name: nxtUserName,
                     status: 'on'
