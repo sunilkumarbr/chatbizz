@@ -24,7 +24,7 @@
 			<a href='/login'><button id="signup" class="btn btn-primary btn-arrow-left">login</button></a>
 		</div>
 	</body>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/js/jquery-1.11.1.js"></script>
 	<script>
 	$('#name').val('').focus();
 	$('#password').val('');
@@ -33,7 +33,7 @@
 	$('#passwordConfirm').val('');
 		$('#submit').on('click',function(){
 			//
-			if($('#name').val()===''||!$('#name').val().match(/^[a-zA-Z][a-zA-Z0-9]*$/))
+			if($('#name').val()===''||!$('#name').val().match(/^[a-zA-Z][a-zA-Z0-9 ]*$/))
 				$('h3').text('user name can not be empty or special charecters');
 			else if($('#email').val()===''||!$('#email').val().match(/^\w+([\.]?\w+)*@\w*(\.\w{2,3})+$/))
 				$('h3').text('email-id is either empty or not correct');
