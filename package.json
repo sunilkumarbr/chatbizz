@@ -1,0 +1,33 @@
+{
+  "name": "chatbizz",
+  "version": "1.0.0",
+  "description": "chatting application - node.js",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "ejs": "^2.3.4",
+    "email-existence": "^0.1.5",
+    "express": "^4.13.3",
+    "express-session": "^1.13.0",
+    "mailgun-js": "^0.7.7",
+    "mongodb": "^2.1.3",
+    "rand-token": "^0.2.1",
+    "nodemailer": "^1.11.0",
+    "socket.io": "^1.4.0",
+    "body-parser": "^1.14.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunilkumarbr/chatbizz.git"
+  },
+  "author": "sunil kumar b r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunilkumarbr/chatbizz/issues"
+  },
+  "homepage": "https://github.com/sunilkumarbr/chatbizz#readme"
+}

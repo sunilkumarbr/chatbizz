@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>login to chatbizz</title>
+		<script src="/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="shortcut icon" href="/img/chatbizz.png">
+	</head>
+	<body>
+		<div id='wrapper'>
+			<h1>Login</h1>
+			<h2 id='error'><%=found%></h2>
+			<h3 id='error'></h3>
+			<form  action="/login" method='post'>
+				<p>username</p><input class="form-control" id='name' name='name' type='text' /><br/>
+				<p>password</p><input class="form-control" id='password' name='password' type='password' /><br/>
+				<button class="btn btn-info btn-arrow-right" id='submit' type="submit">login</button>
+			</form>
+			<a  href='/resend'><strong id='resend'>Resend verification link</strong></a>
+			<h5>OR</h5>
+			<a href='/signup'><button id="signup" class="btn btn-primary btn-arrow-left">signup</button></a>
+			
+		</div>
+	</body>
+	<!-- jQuery library -->
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	$('#name').val('').focus();
+	$('#password').val('');
+		$('#submit').on('click',function(){
+			//
+			if($('#name').val()===''||!$('#name').val().match(/^[a-zA-Z][a-zA-Z0-9 ]*$/)){
+				$('h3').text('user name can not be empty or special charecters');
+				$('#name').focus();
+			}
+			else if($('#password').val()==''){
+				$('h3').text('password is empty');
+				$('#password').focus();
+			}
+			else{
+				$('h3').text('');
+				return true;
+			}
+			return false;
+		});
+	</script>
+</html>

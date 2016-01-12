@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>signup to chatbizz</title>
+		<script src="/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="shortcut icon" href="/img/chatbizz.png">
+	</head>
+	<body>
+		<div id='wrapper'>
+			<h1>signup</h1>
+			<h2 id='error'><%=found%></h2>
+			<h3 id='error'></h3>
+			<form action="/signup" method='post'>
+				username<input class="form-control" id='name' name='name' type='text' /><br/>
+				email<input class="form-control" id='email' name='email' type='text' /><br/>
+				phone<input class="form-control" id='phone' name='phone' type='text' /><br/>
+				password<input class="form-control" id='password' name='password' type='password' /><br/>
+				confirm-password<input class="form-control" id='passwordConfirm' name='passwordConfirm' type='password' /><br/>
+				<button class="btn btn-info btn-arrow-right" id='submit' type="submit">signup</button>
+			</form>
+			<h5>OR</h5>
+			<a href='/login'><button id="signup" class="btn btn-primary btn-arrow-left">login</button></a>
+		</div>
+	</body>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	$('#name').val('').focus();
+	$('#password').val('');
+	$('#email').val('');
+	$('#phone').val('');
+	$('#passwordConfirm').val('');
+		$('#submit').on('click',function(){
+			//
+			if($('#name').val()===''||!$('#name').val().match(/^[a-zA-Z][a-zA-Z0-9]*$/))
+				$('h3').text('user name can not be empty or special charecters');
+			else if($('#email').val()===''||!$('#email').val().match(/^\w+([\.]?\w+)*@\w*(\.\w{2,3})+$/))
+				$('h3').text('email-id is either empty or not correct');
+			else if($('#phone').val()===''||!$('#phone').val().match(/^[0-9]{10}$/))
+				$('h3').text('please enter 10 digit phone number');
+			else if($('#password').val()!==$('#passwordConfirm').val()||$('#password').val()=='')
+				$('h3').text('passwords are not matching');
+			else{
+				$('h3').text('');
+				return true;
+			}
+			return false;
+		});
+	</script>
+</html>

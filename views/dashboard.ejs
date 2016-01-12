@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chatbizz</title>
+		<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+		<link rel="shortcut icon" href="/img/chatbizz.png">
+	</head>
+	<body>
+	
+		<div id='header'>
+			<div id='dp'></div>
+			<h1>Welcome</h1>
+			<p id='meOnline'>online</p>
+			<input type='text' name='findFriend' id='findFriend' placeholder='Find friend by email-id,phone number'/>
+			<img src="/img/search.png" id='searchIcon' alt="search">
+			<a href='/logout'><button id='logout'>Logout</button></a>
+		</div>
+		<div id='body'>
+			<div id='menu'>
+				<div id='navigationBar'></div>
+				<ul id='userList'>
+					
+				</ul>
+			</div>
+			<div id='messageSection'>
+				<div id='reciverName'>
+					<div id='reciverDp'></div>
+					<h2 id='recepientName'>Name</h2>
+					<p id='onlineStatus'>online</p>
+				</div>
+				<ul id='messagelist'>
+					<div id='messageLeft'>dfdsff&#10003;&#128336;</div>
+					<!-- <div id='messageright'>&#10003;&#10003;</div>
+					<div id='messageLeft'>&#128512;&#128514;&#128515;</div>
+					<div id='messageright'>&#10003;&#10003;</div>
+					<div id='messageLeft'>&#128512;&#128514;&#128515;</div>
+					<div id='messageright'>&#10003;&#10003;</div> -->
+				</ul>
+				<div id='emoticonSection'>
+				<ul id='elist'></ul>
+			</div>
+			<div id='sendSection'>
+				<input type='text' id='messageContent' placeholder='Type Your Message .....'/>
+				<button id='send'><img src="/img/send.png"></button>
+				<button id='emoticon'><img id='emojiicon' src="/img/emoticon.png"></button>
+			</div>
+		</div>
+	</div>
+			<p id="developer">Developed by-<a href="#">Sunil Kumar B R</a></p>
+	
+</body>
+<script src="js/socket.io-1.2.0.js"></script>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	// if(navigator.onLine){
+	//   alert('online');
+	//  } else {
+	//   alert('offline');
+	//  }
+
+	// $(document).ready(function(){
+	// 	if($('h1').text()==='Welcome')
+	// 		alert('some error occured please logout and login again');
+	// })
+	
+var emotico=['&#128512;','&#128513;','&#128514;','&#128515;','&#128516;','&#128517;','&#128518;','&#128519;','&#128520;','&#128521;','&#128522;','&#128523;','&#128524;','&#128525;','&#128526;','&#128527;','&#128528;','&#128529;','&#128530;','&#128531;','&#128532;','&#128533;','&#128534;','&#128535;','&#128536;','&#128537;','&#128538;','&#128539;','&#128540;','&#128541;','&#128542;','&#128543;','&#128544;','&#128545;','&#128546;','&#128547;','&#128548;','&#128549;','&#128550;','&#128551;','&#128552;','&#128553;','&#128554;','&#128555;','&#128556;','&#128557;','&#128558;','&#128559;','&#128560;','&#128561;','&#128562;','&#128563;','&#128564;','&#128565;','&#128566;','&#128567;','&#128568;','&#128569;','&#128570;','&#128571;','&#128572;','&#128573;','&#128574;','&#128575;','&#128576;','&#128581;','&#128582;','&#128583;','&#128584;','&#128585;','&#128586;','&#128587;','&#128588;','&#128589;','&#128590;','&#128591;' ];
+	window.addEventListener("offline", function(e) {
+		$('#meOnline').text('offline').css('color','red');
+	alert("you are offline");
+	}, false);
+	window.addEventListener("online", function(e) {
+		$('#meOnline').text('online').css('color','#FFC107');
+	alert("now you are online");
+	}, false);
+	$(window).resize(function() {
+	windowWidth = $(window).width();
+		windowHeight = $(window).height();
+	$('#header').css('width',windowWidth);
+	$('#findFriend').css('left',windowWidth/2-125);
+	$('#searchIcon').css('left',windowWidth/2+140);
+	$('#logout').css('left',windowWidth-120);
+	$('#body').css('width',windowWidth-100)
+			.css('height',windowHeight-120)
+			.css('left',50);
+	});
+	$(document).ready(function(){
+		windowWidth = $(window).width();
+		windowHeight = $(window).height();
+	$('#header').css('width',windowWidth);
+	$('#findFriend').css('left',windowWidth/2-125);
+	$('#searchIcon').css('left',windowWidth/2+140);
+	$('#logout').css('left',windowWidth-120);
+	$('#body').css('width',windowWidth-100)
+			.css('height',windowHeight-120)
+			.css('left',50);
+	});
+	
+	for(var i=0;i<emotico.length;i++){
+		$('#elist').append('<li><button class="emo">'+emotico[i]+'</button></li>');
+	}
+	$('.emo').on('click',function(){
+		// alert($(this).text());
+		preVal=$('#messageContent').val();
+		$('#messageContent').val(preVal+' '+$(this).text()).focus();
+	});
+/*************************socket****************************/
+	var socket=io();
+	var me;
+	var friendList=[];
+	var time=[0,1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12];
+
+	
+
+	$('#send').on('click',function(){
+		// alert($('#messageContent').val());
+		var d=new Date;
+		var year=d.getFullYear();
+		var month=d.getMonth()+1;
+		var day=d.getDate();
+		var hour=d.getHours();
+		var min=d.getMinutes();
+		var date;
+		if(hour<12)
+		date=day+'-'+month+'-'+year+'/'+hour+':'+min+' am';
+		else{
+			hour=time[hour];
+			date=day+'-'+month+'-'+year+'/'+hour+':'+min+' pm';
+		}
+		if($('#messageContent').val()!==''||$('#messageContent').val()===null)
+		socket.emit('chat',{message:$('#messageContent').val(),sender:me,reciver:$('#recepientName').text(),timeStamp:date,aDate:new Date});
+		$('#messageContent').val('');
+		$('#emoticonSection').css('display','none');
+		$('#emojiicon').attr('src','/img/emoticon.png');
+	});
+
+
+	$("#messageContent").keyup(function(event){
+	    if(event.keyCode == 13){
+	       var d=new Date;
+			var year=d.getFullYear();
+			var month=d.getMonth()+1;
+			var day=d.getDate();
+			var hour=d.getHours();
+			var min=d.getMinutes();
+			var date;
+			if(hour<12)
+			date=day+'-'+month+'-'+year+'/'+hour+':'+min+' am';
+			else{
+				hour=time[hour];
+				date=day+'-'+month+'-'+year+'/'+hour+':'+min+' pm';
+			}
+			if($('#messageContent').val()!==''||$('#messageContent').val()===null)
+			socket.emit('chat',{message:$('#messageContent').val(),sender:me,reciver:$('#recepientName').text(),timeStamp:date,aDate:new Date});
+			$('#messageContent').val('');
+			$('#emoticonSection').css('display','none');
+			$('#emojiicon').attr('src','/img/emoticon.png');
+	    }
+	});
+
+
+	$('#emoticon').on('click',function(){
+		// alert();
+		$('#emoticonSection').toggle();
+		if($('#emoticonSection').css('display')!=='none')
+			$('#emojiicon').attr('src','/img/downarrow.png');
+		else
+			$('#emojiicon').attr('src','/img/emoticon.png');
+	});
+
+	socket.on('chat',function(data){
+		if($('#recepientName').text()===data.sender){
+			$('#messagelist').append('<li id="messageLeft">'+data.message+'<srtong id="messageLeftTimestamp">'+data.timeStamp+'</strong></li>');
+			var objDiv = document.getElementById("messagelist");
+			objDiv.scrollTop = objDiv.scrollHeight;
+			$('#messageContent').val('').focus();
+		}
+		else{
+			var yes=false;
+			friendList.forEach(function(name){
+				if(data.sender===name[0])
+					yes=true;
+			})
+			if(yes===false){
+				socket.emit('friendPhone',data.sender);
+				socket.on('friendPhoneRes',function(data){
+					$('#findFriend').val(data);
+					// alert(data);
+				});
+				alert(' you got a message from '+data.sender+'\n but you are not friend with '+data.sender+' yet,\n search for him/her on chitbizz by his/her phone number or mail-id and\n make him/her friend');
+			}
+			else
+				alert('new message from '+data.sender);
+		}
+		
+	});
+	socket.on('me',function(data){
+		$('#messagelist').append('<li id="messageRight">'+data.message+'<srtong id="messageLeftTimestamp">'+data.timeStamp+'</strong></li>');
+		var objDiv = document.getElementById("messagelist");
+			objDiv.scrollTop = objDiv.scrollHeight;
+			$('#messageContent').val('').focus();
+			// alert();
+			// $('#messageRight').removeAttr('messageRight').attr('id','messageRightDouble');
+	});
+	socket.on('myName',function(data){
+		me=data.userName;
+		$('#userList').text('');
+		$('h1').text(data.userName);
+		friendList=data.friends;
+		data.friends.forEach(function(ele){
+			$('#userList').append('<li class="contact"><div id="contactDp"></div><h3 id="contactName">'+ele[0]+'</h3><p id="contactOnline">'+ele[1]+'</p>');
+		});
+		$('.contact').on('click',function(){
+			$('#messageSection').css('display','block')
+			$('#recepientName').text($(this).children().eq(1).text());
+			$('#messagelist').text('');
+			socket.emit('display',{me:me,recipient:$('#recepientName').text()});
+		});
+		socket.on('status',function(data){
+			if(data==='off')
+				$('#onlineStatus').text('offline').css('color','red');
+			else
+				$('#onlineStatus').text('online').css('color','#4caf50');
+		});
+		socket.on('msglist',function(data){
+			$('#messagelist').text('');
+			// console.log(data);
+			for(var i=data.length-1;i>=0;i--){
+				if(data[i].sender===me)
+					$('#messagelist').append('<li id="messageRight">'+data[i].text+'<srtong id="messageLeftTimestamp">'+data[i].timeStamp+'</strong></li>');
+				else
+					$('#messagelist').append('<li id="messageLeft">'+data[i].text+'<srtong id="messageLeftTimestamp">'+data[i].timeStamp+'</strong></li>');
+			}
+		
+			var objDiv = document.getElementById("messagelist");
+			objDiv.scrollTop = objDiv.scrollHeight;
+			$('#messageContent').val('').focus();
+		});
+	});
+	socket.on('isOnline',function(data){
+		if($('#recepientName').text()===data.name){
+			if(data.status==='on')
+				$('#onlineStatus').text('online').css('color','#4caf50');
+			else
+				$('#onlineStatus').text('offline').css('color','red');
+		}
+	});
+	$('#searchIcon').on('click',function(){
+		var number=0;
+		var email=null;
+		function isNumeric(n) {
+			if(n.indexOf('.')>=0&&n=='')
+				return 0;
+			else
+				return !isNaN(parseInt(n)) && isFinite(n);
+		}
+		if(isNumeric($('#findFriend').val())){
+			if($('#findFriend').val().length<10||$('#findFriend').val().length>10)
+				alert('provide 10 digit phone number');
+			else
+				number=$('#findFriend').val();
+		}
+		else{
+			if(!$('#findFriend').val().match(/^\w+([\.]?\w+)*@\w*(\.\w{2,3})+$/))
+				alert('provide valid email-id');
+			else
+				email=$('#findFriend').val();
+		}
+		socket.emit('searchFriend',{number:number,email:email});
+		// $('#findFriend').val('');
+	});
+	socket.on('userFound',function(data){
+		var alreadyFriend=false;
+		if(data.status===0){
+			alert('user not found');
+		}
+		else{
+			$('#findFriend').val('');
+			// alert('user found with name:'+data.name);
+			// alert(friendList);
+			if(data.name===$('h1').text()){
+					alreadyFriend=true;
+					alert('He he it\'s you man!!');
+				}
+			friendList.forEach(function(ele){
+				if(data.name===ele[0]){
+					alreadyFriend=true;
+					alert('you are already friend with '+ele[0]);
+				}
+				
+			});
+			if(alreadyFriend===false){
+				var result=confirm('You want to be friend with '+data.name+' ?');
+				// alert(result);
+				if(result===true)
+					socket.emit('addFriend',{friendName:data.name,me:me,phone:data.phone});
+			}
+		}
+	});
+	socket.on('addFToList',function(data){
+		$('#userList').append('<li class="contact"><div id="contactDp"></div><h3 id="contactName">'+data.name+'</h3><p id="contactOnline">'+data.phone+'</p>');
+		friendList.push([data.name,Number(data.phone)]);
+		// console.log(friendList);
+		$('.contact').on('click',function(){
+			$('#messageSection').css('display','block')
+			$('#recepientName').text($(this).children().eq(1).text());
+			$('#messagelist').text('');
+			socket.emit('display',{me:me,recipient:$('#recepientName').text()});
+		});
+		socket.on('status',function(data){
+			if(data==='off')
+				$('#onlineStatus').text('offline').css('color','red');
+			else
+				$('#onlineStatus').text('online').css('color','#4caf50');
+		});
+		socket.on('msglist',function(data){
+			$('#messagelist').text('');
+			// console.log(data);
+			for(var i=data.length-1;i>=0;i--){
+				if(data[i].sender===me)
+					$('#messagelist').append('<li id="messageRight">'+data[i].text+'<srtong id="messageLeftTimestamp">'+data[i].timeStamp+'</strong></li>');
+				else
+					$('#messagelist').append('<li id="messageLeft">'+data[i].text+'<srtong id="messageLeftTimestamp">'+data[i].timeStamp+'</strong></li>');
+			}
+		
+			var objDiv = document.getElementById("messagelist");
+			objDiv.scrollTop = objDiv.scrollHeight;
+			$('#messageContent').val('').focus();
+		});
+	});
+</script>
+</html>

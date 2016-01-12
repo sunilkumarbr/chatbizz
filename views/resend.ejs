@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>resend verify</title>
+		<script src="/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="shortcut icon" href="/img/chatbizz.png">
+	</head>
+	<body>
+		<div id='wrapper'>
+			<h1>verification</h1>
+			<h2 id='error'><%=found%></h2>
+			<h3 id='error'></h3>
+			<form action="/resend" method='post'>
+				email:<input class="form-control" id='email' name='email' type='text' /><br/>
+				<button class="btn btn-info btn-arrow-right" id='submit' type="submit">Verify</button>
+			</form>
+			<a href='/'><button id="signup" class="btn btn-primary btn-arrow-left">Back to Home</button></a>
+		</div>
+	</body>
+	<!-- jQuery library -->
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	$('#email').val('').focus();
+		$('#submit').on('click',function(){
+		
+			if($('#email').val()===''||!$('#email').val().match(/^\w+([\.]?\w+)*@\w*(\.\w{2,3})+$/))
+				$('h3').text('email-id is either empty or not correct');
+			
+			else{
+				$('h3').text('');
+				return true;
+			}
+			return false;
+		});
+	</script>
+</html>

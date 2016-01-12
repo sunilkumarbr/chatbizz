@@ -1,0 +1,356 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #e0f2f1;
+}
+
+#header {
+    position: fixed;
+    height: 150px;
+    background: #009688;
+    /*box-shadow:0 2px 20px gray;*/
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+h1 {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: 80px;
+    outline: none;
+    cursor: pointer;
+    color: #37474f;
+}
+
+#meOnline {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    margin-top: 50px;
+    margin-left: 87px;
+    outline: none;
+    cursor: pointer;
+    color: #FFC107;
+}
+
+#dp {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 15px;
+    width: 60px;
+    height: 60px;
+    background: url(/img/person.png);
+    border-radius: 100px;
+    outline: none;
+}
+
+#findFriend {
+    width: 250px;
+    height: 20px;
+    position: absolute;
+    top: 28px;
+    outline: none;
+}
+
+#searchIcon {
+    position: absolute;
+    top: 32px;
+    outline: none;
+}
+
+#logout {
+    position: absolute;
+    top: 30px;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    background: #006064;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+#developer {
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+    color: black;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+#body {
+    position: absolute;
+    top: 70px;
+    background: white;
+    box-shadow: 0 2px 20px gray;
+}
+
+#menu {
+    position: absolute;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    background: #c5e1a5;
+    float: left;
+}
+
+#messageSection {
+    position: absolute;
+    left: 30%;
+    width: 70%;
+    height: 100%;
+    background: white;
+    float: left;
+    display: none;
+}
+
+#reciverName {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 15%;
+    background: #b2dfdb;
+    box-shadow: 5px 0px 10px gray;
+}
+
+#sendSection {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+    background: #80deea;
+    box-shadow: 5px 0px 10px gray;
+}
+
+#messagelist {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    height: 75%;
+    /*background:#f9fbe7;*/
+    max-height: 75%;
+    overflow-y: scroll;
+    background: url(/img/messageBackground.jpg) no-repeat;
+    background-position: center;
+}
+
+#emoticonSection {
+    position: absolute;
+    bottom: 12%;
+    left: 43%;
+    width: 55%;
+    height: 55%;
+    max-height: 40%;
+    overflow-y: scroll;
+    background: #c5e1a5;
+    background-position: center;
+    display: none;
+    border-radius: 5px;
+    border-top: 2px solid #80deea;
+    box-shadow: 5px 0px 10px gray;
+}
+
+#navigationBar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 15%;
+    background: #dcedc8;
+    box-shadow: 5px 0px 10px gray;
+}
+
+#userList {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    height: 85%;
+    background: white;
+    max-height: 85%;
+    overflow-y: scroll;
+}
+
+#reciverDp {
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    width: 6%;
+    height: 75%;
+    background: url(/img/person.png);
+    background-position: center;
+    border-radius: 100px;
+}
+
+#recepientName {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 18px;
+    left: 65px;
+    color: #37474f;
+}
+
+#onlineStatus {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 42px;
+    left: 69px;
+    font-size: 13px;
+    color: #4caf50;
+}
+
+#messageContent {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 80%;
+    height: 70%;
+    padding-left: 10px;
+    outline: none;
+    border: none;
+}
+
+#send {
+    position: absolute;
+    top: 5px;
+    right: 100px;
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+#messageLeft {
+    margin-left: 10%;
+    width: 45%;
+    height: auto;
+    /*********auto***********/
+    background: #fff3e0;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 20px gray;
+    position: relative;
+}
+
+#messageLeftTimestamp {
+    /*content: '\2713';*/
+    position: absolute;
+    right: 25px;
+    margin: 5px;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+#messageRight {
+    margin-left: 43%;
+    width: 45%;
+    height: auto;
+    /*********auto***********/
+    background: #e6ee9c;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    /*letter-spacing: -8px;*/
+    box-shadow: 1px 1px 5px gray;
+    position: relative;
+}
+
+#messageRight:after {
+    /*content:'\2713';  for clock 1F550 for checkmark 2713 aND fr double -8 letter-spacing*/
+    content: '\2713';
+    position: absolute;
+    right: 25px;
+    letter-spacing: -8px;
+}
+
+#messageRightTimestamp {
+    /*content: '\2713';*/
+    position: absolute;
+    right: 25px;
+    margin: 5px;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+#messageRightDouble:after {
+    /*content:'\2713';  for clock 1F550 for checkmark 2713 aND fr double -8 letter-spacing*/
+    content: '\2713\2713';
+    position: absolute;
+    right: 25px;
+    letter-spacing: -8px;
+}
+
+.contact {
+    position: relative;
+    width: 100%;
+    height: 15%;
+    /*background:green;*/
+    border-bottom: 1px dashed black;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#contactDp {
+    width: 13%;
+    height: 87%;
+    background: url(/img/person.png) no-repeat;
+    background-position: center;
+    border-radius: 100px;
+    margin: 10px 0 0px 20px;
+}
+
+#contactName {
+    margin: 0;
+    position: absolute;
+    top: 12px;
+    left: 85px;
+    color: #37474f;
+}
+
+#contactOnline {
+    margin: 0;
+    position: absolute;
+    top: 30px;
+    left: 87px;
+    font-size: 12px;
+    color: #37474f;
+}
+
+#emoticon {
+    position: absolute;
+    top: 5px;
+    right: 50px;
+    background: transparent;
+    outline: none;
+    border: none;
+}
+
+#elist li {
+    display: inline;
+}
+
+#elist button {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 28px;
+}
